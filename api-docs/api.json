@@ -1,0 +1,2232 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "API Rest MUSICPRO| Integración de Plataformas",
+    "termsOfService": "https://example.com/terms/",
+    "contact": {
+      "email": "mau.ormazabal@duocuc.cl",
+      "url": "http://example.com/contact"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "x-logo": {
+      "url": "https://redocly.github.io/openapi-template/logo.png"
+    },
+    "description": "Esta es una API Rest desarrollada para la tienda de música MUSICPRO."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:9092/api/v1",
+      "description": "Servidor Desarrollo"
+    }
+  ],
+  "paths": {
+    "/auth/user": {
+      "post": {
+        "tags": [
+          "Autentificacion"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "Email del Usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "Contraseña del Usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "description": "Endpoint para autentificarse e iniciar sesion en la tienda.",
+        "summary": "Metodo para autentificar e iniciar sesion en la tienda.",
+        "operationId": "authUser",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login OK"
+          },
+          "400": {
+            "description": "Login Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string",
+                    "example": "Juan"
+                  },
+                  "apellido": {
+                    "type": "string",
+                    "example": "Perez"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "jperez@gmail.com"
+                  },
+                  "rol": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/Role"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      }
+    },
+    "/user/all": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Metodo para obtener listado de todos los Usuarios.",
+        "description": "Metodo para obtener listado de todos los Usuarios.",
+        "operationId": "getListUser",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data OK"
+          },
+          "400": {
+            "description": "Data Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      }
+    },
+    "/user/{id}/profile": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del Usuario",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "summary": "Metodo que obtiene el perfil del Usuario por ID.",
+        "description": "Metodo que obtiene la información del Usuario por ID.",
+        "operationId": "getUserProfile",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data OK"
+          },
+          "400": {
+            "description": "Data No encontrada"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string",
+                    "example": "Juan"
+                  },
+                  "apellido": {
+                    "type": "string",
+                    "example": "Perez"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "jperez@gmail.com"
+                  },
+                  "telefono": {
+                    "type": "string",
+                    "example": "+569123456789"
+                  },
+                  "direccion1": {
+                    "type": "string",
+                    "example": "Calle Prado, 221, La Cisterna"
+                  },
+                  "direccion2": {
+                    "type": "string",
+                    "example": "Calle Luis, 887, La Reina"
+                  },
+                  "rol": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/Role"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      },
+      "put": {
+        "tags": [
+          "Usuarios"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del Usuario",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          },
+          {
+            "name": "nombre",
+            "in": "query",
+            "description": "Nombre del Usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "name": "apellido",
+            "in": "query",
+            "description": "Apellido del Usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "Email del Usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "name": "telefono",
+            "in": "query",
+            "description": "Telefono del Usuario",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": false
+          },
+          {
+            "name": "direccion1",
+            "in": "query",
+            "description": "Direccion 01 del Usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "name": "direccion2",
+            "in": "query",
+            "description": "Direccion 02 del Usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "summary": "Metodo que actualiza el perfil del Usuario por ID.",
+        "description": "Metodo que actualiza el perfil del Usuario por ID.",
+        "operationId": "updateUserProfile",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuario Actualizado"
+          },
+          "400": {
+            "description": "No se ha podido actualizar"
+          }
+        }
+      }
+    },
+    "/user/{id}/profile/password": {
+      "put": {
+        "tags": [
+          "Usuarios"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del Usuario",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "Contraseña del Usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "summary": "Metodo para actualizar la contraseña de un Usuario.",
+        "description": "Metodo para actualizar la contraseña de un Usuario.",
+        "operationId": "gupdateUserPassword",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contraseña Actualizada"
+          },
+          "400": {
+            "description": "Error al actualizar"
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "tags": [
+          "Usuarios"
+        ],
+        "parameters": [
+          {
+            "name": "nombre",
+            "in": "query",
+            "description": "Nombre del Usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "apellido",
+            "in": "query",
+            "description": "Apellido del Usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "Email del Usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "telefono",
+            "in": "query",
+            "description": "Telefono del Usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "direccion1",
+            "in": "query",
+            "description": "Direccion 01 del Usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "direccion2",
+            "in": "query",
+            "description": "Direccion 02 del Usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "name": "contrasena",
+            "in": "query",
+            "description": "Contraseña del Usuario (SHA256)",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "rol_id",
+            "in": "query",
+            "description": "ID Rol para el Usuario",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "summary": "Metodo para crear un Usuario .",
+        "description": "Metodo para crear un Usuario.",
+        "operationId": "createUser",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Usuario Creado Correctamente"
+          },
+          "400": {
+            "description": "Error al crear el Usuario"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      }
+    },
+    "/role/all": {
+      "get": {
+        "tags": [
+          "Roles"
+        ],
+        "summary": "Metodo para obtener listado de todos los Roles.",
+        "description": "Metodo para obtener listado de todos los Roles.",
+        "operationId": "getListRoles",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data OK"
+          },
+          "400": {
+            "description": "Data Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Role"
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      }
+    },
+    "/role/{id}": {
+      "get": {
+        "tags": [
+          "Roles"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del Rol",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "summary": "Metodo que obtiene un Rol.",
+        "description": "Metodo que obtiene un Rol.",
+        "operationId": "getRole",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data OK"
+          },
+          "400": {
+            "description": "Data No encontrada"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Role"
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      },
+      "put": {
+        "tags": [
+          "Roles"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del Rol",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          },
+          {
+            "name": "nombre",
+            "in": "query",
+            "description": "Nombre del Rol",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "name": "descripcion",
+            "in": "query",
+            "description": "Descripcion del Rol",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "summary": "Metodo que actualiza un Rol por ID.",
+        "description": "Metodo que actualiza un Rol por ID.",
+        "operationId": "updateRole",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rol Actualizado"
+          },
+          "400": {
+            "description": "No se ha podido actualizar el Rol"
+          }
+        }
+      }
+    },
+    "/role": {
+      "post": {
+        "tags": [
+          "Roles"
+        ],
+        "parameters": [
+          {
+            "name": "nombre",
+            "in": "query",
+            "description": "Nombre del Rol",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "descripcion",
+            "in": "query",
+            "description": "Descripcion del Rol",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "summary": "Metodo para crear un Rol .",
+        "description": "Metodo para crear un Rol.",
+        "operationId": "createRole",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Rol Creado Correctamente"
+          },
+          "400": {
+            "description": "Error al crear Rol"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Role"
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      }
+    },
+    "/category/all": {
+      "get": {
+        "tags": [
+          "Categorias"
+        ],
+        "summary": "Metodo para obtener listado de todos las Categorias.",
+        "description": "Metodo para obtener listado de todos las Categorias.",
+        "operationId": "getListCategories",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data OK"
+          },
+          "400": {
+            "description": "Data Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Category"
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      }
+    },
+    "/category/{id}": {
+      "get": {
+        "tags": [
+          "Categorias"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID Categoria",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "summary": "Metodo que obtiene una Categoria.",
+        "description": "Metodo que obtiene una Categoria.",
+        "operationId": "getProduct",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data OK"
+          },
+          "400": {
+            "description": "Data No encontrada"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Category"
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      },
+      "put": {
+        "tags": [
+          "Categorias"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del Categoria",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          },
+          {
+            "name": "nombre",
+            "in": "query",
+            "description": "Nombre de la Categoria",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "name": "descripcion",
+            "in": "query",
+            "description": "Descripcion de la Categoria",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "summary": "Metodo que actualiza los atributos de una Categoria por ID.",
+        "description": "Metodo que actualiza los atributos de una Categoria por ID.",
+        "operationId": "updateCategory",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Categoria Actualizada"
+          },
+          "400": {
+            "description": "No se ha podido actualizar la Categoria"
+          }
+        }
+      }
+    },
+    "/product/all": {
+      "get": {
+        "tags": [
+          "Productos"
+        ],
+        "summary": "Metodo para obtener listado de todos los Productos.",
+        "description": "Metodo para obtener listado de todos los Productos.",
+        "operationId": "getListProducts",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data OK"
+          },
+          "400": {
+            "description": "Data Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      }
+    },
+    "/product/{id}": {
+      "get": {
+        "tags": [
+          "Productos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del Producto",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "summary": "Metodo que obtiene un Producto.",
+        "description": "Metodo que obtiene un Producto.",
+        "operationId": "getProduct",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data OK"
+          },
+          "400": {
+            "description": "Data No encontrada"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      },
+      "put": {
+        "tags": [
+          "Productos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del Producto",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          },
+          {
+            "name": "nombre",
+            "in": "query",
+            "description": "Nombre del Producto",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "name": "descripcion",
+            "in": "query",
+            "description": "Descripcion del Producto",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "name": "stock",
+            "in": "query",
+            "description": "Cantidad de Stock del Producto",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "name": "costo",
+            "in": "query",
+            "description": "Valor Costo del Producto",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "name": "precio",
+            "in": "query",
+            "description": "Precio de Venta del Producto",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "name": "id_categoria",
+            "in": "query",
+            "description": "ID Categoria del Producto",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "name": "id_modelo",
+            "in": "query",
+            "description": "Id Modelo del Producto",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          }
+        ],
+        "summary": "Metodo que actualiza los atributos de un Producto por ID.",
+        "description": "Metodo que actualiza los atributos de un Producto por ID.",
+        "operationId": "updateProduct",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Producto Actualizado"
+          },
+          "400": {
+            "description": "No se ha podido actualizar el Producto"
+          }
+        }
+      }
+    },
+    "/product/all/category/{id_category}": {
+      "get": {
+        "tags": [
+          "Productos"
+        ],
+        "parameters": [
+          {
+            "name": "id_category",
+            "in": "path",
+            "description": "ID de la Categoria",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "summary": "Metodo que obtiene todos los Productos de una categoria.",
+        "description": "Metodo que obtiene todos los Productos de una categoria..",
+        "operationId": "getProductByCategory",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data OK"
+          },
+          "400": {
+            "description": "Data No encontrada"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "category": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/Category"
+                  },
+                  "product": {
+                    "type": "array",
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      }
+    },
+    "/product": {
+      "post": {
+        "tags": [
+          "Productos"
+        ],
+        "parameters": [
+          {
+            "name": "sku",
+            "in": "query",
+            "description": "SKU del Producto",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "nombre",
+            "in": "query",
+            "description": "Nombre del Producto",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "descripcion",
+            "in": "query",
+            "description": "Descripcion del Producto",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "name": "stock",
+            "in": "query",
+            "description": "Cantidad de Stock del Producto",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "name": "costo",
+            "in": "query",
+            "description": "Valor Costo del Producto",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "name": "precio",
+            "in": "query",
+            "description": "Precio de Venta del Producto",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "name": "id_categoria",
+            "in": "query",
+            "description": "ID Categoria del Producto",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "name": "id_modelo",
+            "in": "query",
+            "description": "Id Modelo del Producto",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "summary": "Metodo para crear un Producto .",
+        "description": "Metodo para crear un Producto.",
+        "operationId": "createProduct",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Producto Creado Correctamente"
+          },
+          "400": {
+            "description": "Error al crear Producto"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      }
+    },
+    "/purchase-order/all": {
+      "get": {
+        "tags": [
+          "Ordenes de Pedido"
+        ],
+        "summary": "Metodo para obtener listado de todass las Ordenes de Pedido.",
+        "description": "Metodo para obtener listado de todas las Ordenes de Pedido.",
+        "operationId": "getListPurchaseOrders",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data OK"
+          },
+          "400": {
+            "description": "Data Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PurchaseOrder"
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      }
+    },
+    "/purchase-order/{id}": {
+      "get": {
+        "tags": [
+          "Ordenes de Pedido"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID Orden de Pedido",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "summary": "Metodo que obtiene una Orden de Pedido.",
+        "description": "Metodo que obtiene una Orden de Pedido.",
+        "operationId": "getPurchaseOrder",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data OK"
+          },
+          "400": {
+            "description": "Data No encontrada"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PurchaseOrder"
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      },
+      "put": {
+        "tags": [
+          "Ordenes de Pedido"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del Producto",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          },
+          {
+            "name": "tipo_entrega",
+            "in": "query",
+            "description": "Tipo de Entrega",
+            "schema": {
+              "type": "string",
+              "example": "Despacho o Retiro en Tienda"
+            },
+            "required": false
+          },
+          {
+            "name": "direccion_entrega",
+            "in": "query",
+            "description": "Direccion de Entrega",
+            "schema": {
+              "type": "string",
+              "example": "Calle San Juan 445, Las Condes"
+            },
+            "required": false
+          },
+          {
+            "name": "estado",
+            "in": "query",
+            "description": "Estado de la Orden de Pedido",
+            "schema": {
+              "type": "string",
+              "example": "Ej. En Preparacion"
+            },
+            "required": false
+          },
+          {
+            "name": "productos",
+            "in": "query",
+            "description": "Listado de Productos Seleccionados",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "productos": {
+                  "type": [],
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            },
+            "required": false
+          }
+        ],
+        "summary": "Metodo que actualiza los atributos de una Orden de Pedido por ID.",
+        "description": "Metodo que actualiza los atributos de una Orden de Pedido por ID.",
+        "operationId": "updatePurchaseOrder",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Orden de Pedido Actualizada"
+          },
+          "400": {
+            "description": "No se ha podido actualizar la Orden de Pedido"
+          }
+        }
+      }
+    },
+    "/purchase-order": {
+      "post": {
+        "tags": [
+          "Ordenes de Pedido"
+        ],
+        "parameters": [
+          {
+            "name": "fecha_inicio",
+            "in": "query",
+            "description": "Fecha de Inicio Orden",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "fecha_fin",
+            "in": "query",
+            "description": "Fecha de Fin Orden",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "name": "id_cliente",
+            "in": "query",
+            "description": "ID Cliente de la Orden",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "name": "tipo_entrega",
+            "in": "query",
+            "description": "Tipo de Entrega",
+            "schema": {
+              "type": "string",
+              "example": "Despacho o Retiro en Tienda"
+            },
+            "required": true
+          },
+          {
+            "name": "direccion_entrega",
+            "in": "query",
+            "description": "Direccion de Entrega",
+            "schema": {
+              "type": "string",
+              "example": "Calle San Juan 445, Las Condes"
+            },
+            "required": true
+          },
+          {
+            "name": "total",
+            "in": "query",
+            "description": "Total a pagar en la Orden",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "name": "estado",
+            "in": "query",
+            "description": "Estado de la Orden de Pedido",
+            "schema": {
+              "type": "string",
+              "example": "Ej. En Preparacion"
+            },
+            "required": true
+          },
+          {
+            "name": "productos",
+            "in": "query",
+            "description": "Listado de Productos Seleccionados",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "productos": {
+                  "type": [],
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            },
+            "required": true
+          }
+        ],
+        "summary": "Metodo para crear una Orden de Pedido .",
+        "description": "Metodo para crear una Orden de Pedido.",
+        "operationId": "createPurchaseOrder",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Orden de Pedido Creada Correctamente"
+          },
+          "400": {
+            "description": "Error al crear la Orden de Pedido"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PurchaseOrder"
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      }
+    },
+    "/notify/send": {
+      "post": {
+        "tags": [
+          "Notificaciones"
+        ],
+        "parameters": [
+          {
+            "name": "fecha",
+            "in": "query",
+            "description": "Fecha de Notificacion",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "id_cliente",
+            "in": "query",
+            "description": "ID Cliente",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "name": "mensaje",
+            "in": "query",
+            "description": "Contenido del mensaje para notificacion",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "summary": "Metodo para enviar notificaciones por email .",
+        "description": "Metodo para enviar notificaciones por email.",
+        "operationId": "sendNotify",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Notificacion Enviada Correctamente"
+          },
+          "400": {
+            "description": "Error al enviar Notificacion"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Notify"
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      }
+    },
+    "/payment/transbank/webpay": {
+      "post": {
+        "tags": [
+          "Pagos"
+        ],
+        "parameters": [
+          {
+            "name": "buy_order",
+            "in": "query",
+            "description": "Orden de compra de la tienda. Este número debe ser único para cada transacción. Largo máximo: 26. La orden de compra puede tener: Números, letras, mayúsculas y minúsculas, y los signos |_=&%.,~:/?[+!@()>-",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "session_id",
+            "in": "query",
+            "description": "Identificador de sesión, uso interno de comercio, este valor es devuelto al final de la transacción. Largo máximo: 61",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "amount",
+            "in": "query",
+            "description": "Monto de la transacción. Máximo 2 decimales para USD. Largo máximo: 17",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          },
+          {
+            "name": "return_url",
+            "in": "query",
+            "description": "URL del comercio, a la cual Webpay redireccionará posterior al proceso de autorización. Largo máximo: 256",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "summary": "Metodo para crear una transacción de pago mediante webpay .",
+        "description": "Metodo para crear una transacción de pago mediante webpay.",
+        "operationId": "sendPayment",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Notificacion Enviada Correctamente"
+          },
+          "400": {
+            "description": "Error al enviar Notificacion"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "payment": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/Payment"
+                  },
+                  "token": {
+                    "type": "string",
+                    "example": "Token de la transacción. Largo: 64."
+                  },
+                  "url": {
+                    "type": "string",
+                    "example": "URL de formulario de pago Webpay. Largo máximo: 255."
+                  }
+                }
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      }
+    },
+    "/payment/all": {
+      "get": {
+        "tags": [
+          "Pagos"
+        ],
+        "summary": "Metodo para obtener listado de todos los Pagos.",
+        "description": "Metodo para obtener listado de todos los Pagos.",
+        "operationId": "getListPayments",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data OK"
+          },
+          "400": {
+            "description": "Data Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Payment"
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      }
+    },
+    "/payment/{id}": {
+      "get": {
+        "tags": [
+          "Pagos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID Pago",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "summary": "Metodo que obtiene el detalle de un Pago.",
+        "description": "Metodo que obtiene el detalle de un Pago.",
+        "operationId": "getPaymentId",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data OK"
+          },
+          "400": {
+            "description": "Data No encontrada"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Payment"
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      }
+    },
+    "/courrier/{id}": {
+      "get": {
+        "tags": [
+          "Courrier"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID Courrier",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "summary": "Metodo que obtiene un Courrier.",
+        "description": "Metodo que obtiene un Courrier.",
+        "operationId": "getCourrier",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data OK"
+          },
+          "400": {
+            "description": "Data No encontrada"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Courrier"
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      },
+      "put": {
+        "tags": [
+          "Courrier"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID Courrier",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          },
+          {
+            "name": "nombre",
+            "in": "query",
+            "description": "Nombre del Courrier",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "name": "descripcion",
+            "in": "query",
+            "description": "Descripcion del Courrier",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "summary": "Metodo que actualiza los atributos de un Courrier.",
+        "description": "Metodo que actualiza los atributos de un Courrier.",
+        "operationId": "updateCourrier",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Courrier Actualizado"
+          },
+          "400": {
+            "description": "No se ha podido actualizar el Courrier"
+          }
+        }
+      }
+    },
+    "/courrier/all": {
+      "get": {
+        "tags": [
+          "Courrier"
+        ],
+        "summary": "Metodo que obtiene un listado de todos los Courrier.",
+        "description": "Metodo que obtiene un listado de todos los Courrier.",
+        "operationId": "getAllCourriers",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data OK"
+          },
+          "400": {
+            "description": "Data No encontrada"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Courrier"
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      }
+    },
+    "/courrier": {
+      "post": {
+        "tags": [
+          "Courrier"
+        ],
+        "parameters": [
+          {
+            "name": "nombre",
+            "in": "query",
+            "description": "Nombre del Courrier",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "descripcion",
+            "in": "query",
+            "description": "Descripcion del Courrier",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "summary": "Metodo para crear nueva entidad Courrier.",
+        "description": "Metodo para crear nueva entidad Courrier.",
+        "operationId": "createCourrier",
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Courrier Creado Correctamente"
+          },
+          "400": {
+            "description": "Error al crear Courrier"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Courrier"
+              }
+            }
+          },
+          "description": "Respuesta de ejemplo",
+          "required": false
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Id del Usuario",
+            "example": 864321
+          },
+          "rut": {
+            "type": "string",
+            "example": "12345678-9",
+            "description": "Rut del Usuario"
+          },
+          "nombre": {
+            "type": "string",
+            "example": "Juan",
+            "description": "Nombre del Usuario"
+          },
+          "apellido": {
+            "type": "string",
+            "example": "Perez",
+            "description": "Apellido del Usuario"
+          },
+          "email": {
+            "type": "string",
+            "example": "jperez@gmail.com",
+            "description": "Email del Usuario"
+          },
+          "telefono": {
+            "type": "string",
+            "example": "+569123456789",
+            "description": "Telefono del Usuario"
+          },
+          "direccion1": {
+            "type": "string",
+            "example": "Calle Prado, 221, La Cisterna",
+            "description": "Direccion Primaria del Usuario"
+          },
+          "direccion2": {
+            "type": "string",
+            "example": "Calle Luis, 887, La Reina",
+            "description": "Direccion Secundaria del Usuario"
+          },
+          "contrasena": {
+            "type": "string",
+            "example": "********",
+            "description": "Contraseña del Usuario"
+          },
+          "rol": {
+            "type": "object",
+            "$ref": "#/components/schemas/Role"
+          }
+        }
+      },
+      "Role": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Id del Rol",
+            "example": 1
+          },
+          "nombre": {
+            "type": "string",
+            "example": "Cliente",
+            "description": "Nombre del Rol"
+          },
+          "descripcion": {
+            "type": "string",
+            "example": "Rol destinado al Usuario Comprador",
+            "description": "Descripcion acerca del Rol"
+          }
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Id del Producto",
+            "example": 1
+          },
+          "sku": {
+            "type": "string",
+            "description": "Codigo SKU del Producto",
+            "example": "PRD000-001"
+          },
+          "nombre": {
+            "type": "string",
+            "example": "Guitarra",
+            "description": "Nombre del Producto"
+          },
+          "descripcion": {
+            "type": "string",
+            "example": "Cliente",
+            "description": "Descripcion acerca del Producto"
+          },
+          "stock": {
+            "type": "integer",
+            "format": "int64",
+            "example": 80,
+            "description": "Cantidad de unidades en inventario del Producto"
+          },
+          "costo": {
+            "type": "string",
+            "example": 20000,
+            "description": "Valor Costo del Producto"
+          },
+          "precio": {
+            "type": "string",
+            "example": 50000,
+            "description": "Valor de venta del Producto"
+          },
+          "categoria": {
+            "type": "object",
+            "$ref": "#/components/schemas/Category"
+          },
+          "marca_modelo": {
+            "type": "object",
+            "$ref": "#/components/schemas/ModelBrand"
+          }
+        }
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Id de la Categoria",
+            "example": 1
+          },
+          "nombre": {
+            "type": "string",
+            "example": "Cuerdas",
+            "description": "Nombre del Categoria"
+          },
+          "descripcion": {
+            "type": "string",
+            "example": "Instrumentos y Accesorios de Cuerda",
+            "description": "Descripcion acerca del Categoria"
+          }
+        }
+      },
+      "PurchaseOrder": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Id de la Orden de Pedido",
+            "example": 1
+          },
+          "fecha_inicio": {
+            "type": "string",
+            "example": "2023-06-10 10:45:21",
+            "description": "Fecha Creación Orden de Pedido"
+          },
+          "fecha_fin": {
+            "type": "string",
+            "example": "2023-06-10 10:59:47",
+            "description": "Fecha Término Orden de Pedido"
+          },
+          "cliente": {
+            "type": "object",
+            "$ref": "#/components/schemas/User"
+          },
+          "tipo_entrega": {
+            "type": "string",
+            "example": "Retiro en Tienda",
+            "description": "Se especifica como se realizará la entrega de la venta (Despacho o Retiro)"
+          },
+          "direccion_entrega": {
+            "type": "string",
+            "example": "Calle San Juan 445, Las Condes",
+            "description": "Se especifica en que direccion se retira la entrega"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64",
+            "example": 120000,
+            "description": "Total de la compra"
+          },
+          "estado": {
+            "type": "string",
+            "example": "En Preparación",
+            "description": "Estado de la orden de pedido."
+          },
+          "productos": {
+            "type": "array",
+            "$ref": "#/components/schemas/Product"
+          }
+        }
+      },
+      "Notify": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Id del registro",
+            "example": 1
+          },
+          "fecha": {
+            "type": "string",
+            "example": "2023-06-10 10:45:21",
+            "description": "Fecha de envío notificacion."
+          },
+          "cliente": {
+            "type": "object",
+            "$ref": "#/components/schemas/User"
+          },
+          "mensaje": {
+            "type": "string",
+            "example": "Estimado cliente, su compra ha sido entregada.",
+            "description": "Mensaje para el cliente acerca de su orden."
+          }
+        }
+      },
+      "Payment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Id interno de pago",
+            "example": 1
+          },
+          "fecha": {
+            "type": "string",
+            "example": "2023-06-10 10:45:21",
+            "description": "Fecha del pago"
+          },
+          "cliente": {
+            "type": "object",
+            "$ref": "#/components/schemas/User"
+          },
+          "id_banking_entity": {
+            "type": "integer",
+            "format": "int64",
+            "example": 65431468403684184,
+            "description": "ID de la transacción del medio de pago"
+          }
+        }
+      },
+      "Delivery": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Id interno de despacho",
+            "example": 1
+          },
+          "fecha_compromiso": {
+            "type": "string",
+            "example": "2023-06-10 10:45:21",
+            "description": "Fecha tope para entregar la orden"
+          },
+          "fecha_envio": {
+            "type": "string",
+            "example": "2023-06-10 10:45:21",
+            "description": "Fecha en que sale a reparto"
+          },
+          "fecha_entrega": {
+            "type": "string",
+            "example": "2023-06-10 10:45:21",
+            "description": "Fecha en que recibió el cliente"
+          },
+          "cliente": {
+            "type": "object",
+            "$ref": "#/components/schemas/User"
+          },
+          "delivery": {
+            "type": "object",
+            "$ref": "#/components/schemas/Courrier"
+          },
+          "estado": {
+            "type": "string",
+            "example": "En Ruta",
+            "description": "Estado del Despacho"
+          }
+        }
+      },
+      "Courrier": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Id interno de Courrier",
+            "example": 1
+          },
+          "nombre": {
+            "type": "string",
+            "example": "Chilexpress",
+            "description": "Nombre de la empresa Transportista"
+          },
+          "descripcion": {
+            "type": "string",
+            "example": "Empresa dedicada al despacho de encomiendas",
+            "description": "Descripción de la empresa Transportista"
+          }
+        }
+      },
+      "Brand": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Id de la Marca",
+            "example": 1
+          },
+          "nombre": {
+            "type": "string",
+            "example": "Ibanez",
+            "description": "Nombre de la Marca"
+          }
+        }
+      },
+      "ModelBrand": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Id del Modelo",
+            "example": 1
+          },
+          "nombre": {
+            "type": "string",
+            "example": "Sphere",
+            "description": "Nombre del Modelo"
+          },
+          "marca": {
+            "type": "object",
+            "$ref": "#/components/schemas/Brand"
+          }
+        }
+      }
+    }
+  }
+}
